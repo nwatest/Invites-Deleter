@@ -38,7 +38,7 @@ async def delete(ctx, max_uses: int, hours: int):
 
             for invite in invites:
                 invite_created_at = invite.created_at.replace(tzinfo=pytz.UTC)
-                if invite.max_uses is not None and invite.max_uses <= max_uses and invite_created_at < threshold:
+                if (invite.uses <= max_uses or max_uses == 0) and invite_created_at < threshold:
                     invite_age_hours = (now - invite_created_at).total_seconds() / 3600
                     log_message = f"Deleted invite {invite.code} (uses: {invite.uses}) created {invite_age_hours:.2f} hours ago."
                     requests.post(WEBHOOK_URL, json={"content": log_message})
