@@ -14,7 +14,7 @@ WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 whitelisted = 1239966321387769866
 
 intents = discord.Intents.default()
-intents.message_content = True
+intents.messages = True
 intents.members = True
 intents.guilds = True
 
