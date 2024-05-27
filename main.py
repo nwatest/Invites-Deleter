@@ -12,7 +12,8 @@ TOKEN = os.getenv('TOKEN')
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
 whitelisted = [1239966321387769866,
-               1238325036604067934]
+               1238325036604067934,
+               1054009502258692117]
 
 intents = discord.Intents.default()
 intents.messages = True
@@ -38,7 +39,7 @@ async def delete(ctx, max_uses: int, hours: int):
 
             for invite in invites:
                 invite_created_at = invite.created_at.replace(tzinfo=pytz.UTC)
-                if (invite.uses <= max_uses or max_uses == 0) and invite_created_at < threshold:
+                if invite.uses <= max_uses and invite_created_at < threshold:
                     invite_age_hours = (now - invite_created_at).total_seconds() / 3600
                     log_message = f"Deleted invite {invite.code} (uses: {invite.uses}) created {invite_age_hours:.2f} hours ago."
                     requests.post(WEBHOOK_URL, json={"content": log_message})
@@ -55,7 +56,16 @@ async def delete(ctx, max_uses: int, hours: int):
 async def count(ctx):
     invites = await ctx.guild.invites()
     active_invites = [invite for invite in invites if invite.uses < invite.max_uses or invite.max_uses == 0]
-    await ctx.reply(f"There are {len(active_invites)} active invites in this server.")
+    await ctx.reply(f"There are **{len(active_invites)}** active invites in this server.")
+
+@bot.command()
+async def stop(ctx):
+    if ctx.author.id in whitelisted:
+        await ctx.reply("Stopping bot process..")
+        await bot.logout()
+        os._exit(0)
+    else:
+        await ctx.reply("❌")
 
 keep_alive()
 bot.run(TOKEN)
