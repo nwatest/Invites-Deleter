@@ -11,8 +11,8 @@ load_dotenv()
 TOKEN = os.getenv('TOKEN')
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
-whitelisted = 1239966321387769866
-
+whitelisted = [1239966321387769866,
+               1238325036604067934]
 intents = discord.Intents.default()
 intents.messages = True
 intents.members = True
