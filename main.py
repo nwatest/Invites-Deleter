@@ -1,3 +1,12 @@
+import discord
+from discord.ext import commands
+from dotenv import load_dotenv
+import os
+from datetime import datetime, timedelta
+import pytz
+import requests
+from keep_alive import keep_alive
+
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
