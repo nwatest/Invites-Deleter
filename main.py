@@ -13,7 +13,8 @@ WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
 whitelisted = [1239966321387769866,
                1238325036604067934,
-               1054009502258692117]
+               1054009502258692117,
+               1238048785976922166]
 
 intents = discord.Intents.default()
 intents.messages = True
