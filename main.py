@@ -13,6 +13,7 @@ WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 
 whitelisted = [1239966321387769866,
                1238325036604067934]
+
 intents = discord.Intents.default()
 intents.messages = True
 intents.members = True
@@ -27,7 +28,7 @@ async def on_ready():
 
 @bot.command()
 async def delete(ctx, uses: int, hours: int):
-    if ctx.author.id == whitelisted:
+    if ctx.author.id in whitelisted:  # Check if author's ID is in the whitelisted IDs
         if uses == 0 and hours >= 1:
             now = datetime.utcnow().replace(tzinfo=pytz.UTC)
             threshold = now - timedelta(hours=hours)
